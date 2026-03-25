@@ -4,6 +4,9 @@ WORKDIR /app
 
 COPY go.mod go.sum ./
 
+ARG GOPROXY=https://goproxy.cn,direct
+ENV GOPROXY=${GOPROXY}
+
 RUN go mod download
 
 COPY . .

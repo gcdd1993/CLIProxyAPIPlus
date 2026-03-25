@@ -9,6 +9,7 @@ services:
         VERSION: ${VERSION:-dev}
         COMMIT: ${COMMIT:-none}
         BUILD_DATE: ${BUILD_DATE:-unknown}
+        GOPROXY: ${GOPROXY:-https://goproxy.cn,direct}
     container_name: cli-proxy-api-plus
     # env_file:
     #   - .env

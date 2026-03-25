@@ -207,18 +207,18 @@ func (h *Handler) Middleware() gin.HandlerFunc {
 			return
 		}
 
-		// Accept either Authorization: Bearer <key> or X-Management-Key
+		// Accept either X-Management-Key or Authorization: Bearer <key>.
+		// When both are present, X-Management-Key takes precedence.
 		var provided string
-		if ah := c.GetHeader("Authorization"); ah != "" {
+		if mk := c.GetHeader("X-Management-Key"); mk != "" {
+			provided = mk
+		} else if ah := c.GetHeader("Authorization"); ah != "" {
 			parts := strings.SplitN(ah, " ", 2)
 			if len(parts) == 2 && strings.ToLower(parts[0]) == "bearer" {
 				provided = parts[1]
 			} else {
 				provided = ah
 			}
-		}
-		if provided == "" {
-			provided = c.GetHeader("X-Management-Key")
 		}
 
 		if provided == "" {
